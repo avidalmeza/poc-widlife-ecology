@@ -1,0 +1,78 @@
+/* Define logo background color */
+.skin-blue .main-header .logo {
+  background-color: #3A5A40;
+}
+
+/* Define logo background hover color */
+.skin-blue .main-header .logo:hover {
+  background-color: #3A5A40;
+}
+
+/* Define header background color */
+.skin-blue .main-header .navbar {
+    background-color: #3A5A40;
+}
+
+/* Define sidebar background color */
+.skin-blue .left-side, 
+.skin-blue .main-sidebar, 
+.skin-blue .wrapper {
+  background-color: #D3D9E3;
+}
+
+/* Define sidebar tab item text color */
+.skin-blue .sidebar a {
+  color: #353535;
+}
+
+/* Define sidebar toggle hover color */
+.skin-blue .main-header .navbar .sidebar-toggle:hover {
+  background-color: #507C58;
+}
+
+/* Define sidebar tab item hover color */
+.skin-blue .sidebar-menu > li.active > a, 
+.skin-blue .sidebar-menu > li.menu-open > a, 
+.skin-blue .sidebar-menu > li:hover > a {
+  background: #507C58;
+  border-left-color: #ECF0F5;
+}
+
+/* Define active tab item color */
+.nav-tabs-custom > .nav-tabs > li.active {
+    border-top-color: #507C58;
+}
+
+/* Define (not selected) tab item background and text color */
+#dashboard_tabsetPanel a {
+    color: #DCE1DE !important;
+    background-color: #507C58;
+}
+
+/* Define (selected) tab item background color */
+#dashboard_tabsetPanel > li.active > a {
+    background: #507C58;
+}
+
+/* Define font size */
+body {
+  font-size: 15px;
+}
+
+/* Define logo font size */
+.main-header .logo {
+  font-size: 18px;
+}
+
+/* Define box border color */
+.box {
+  border-top: 3px solid #B39C4D;
+}
+
+/* Define banner image size */
+img.banner {
+  display: block;
+  max-width: 100%;
+  width: auto;
+  margin-bottom: 1rem;
+}
