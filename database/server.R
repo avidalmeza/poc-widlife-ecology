@@ -43,8 +43,10 @@ server <- function(input, output){
     # Append row to data frame
     my_users <- rbind(data, row)
     
-    write_sheet(my_users, ss = id, sheet = 'Copy of Form Responses 1')
+    # Overwrite data frame to sheet
+    googlesheets4::write_sheet(my_users, ss = id, sheet = 'Sheet1')
     
+    # View data frame
     return(my_users)
   }
   
@@ -53,8 +55,10 @@ server <- function(input, output){
     # Update row in data frame
     my_users[row,] <- data[row,]
     
-    write_sheet(my_users, ss = id, sheet = 'Copy of Form Responses 1')
+    # Overwrite data frame to sheet
+    googlesheets4::write_sheet(my_users, ss = id, sheet = 'Sheet1')
     
+    # View data frame
     return(my_users)
   }
   
@@ -63,8 +67,10 @@ server <- function(input, output){
     # Delete row in data frame
     my_users[row,] <- my_users[-row,]
     
-    write_sheet(my_users, ss = id, sheet = 'Copy of Form Responses 1')
+    # Overwrite data frame to sheet
+    googlesheets4::write_sheet(my_users, ss = id, sheet = 'Sheet1')
     
+    # View data frame
     return(my_users)
   }
   
