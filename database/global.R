@@ -6,6 +6,7 @@ library(shinyalert)
 library(here)
 library(tidyverse)
 library(lubridate)
+library(gargle)
 library(googlesheets4)
 library(markdown)
 library(RSQLite)
@@ -21,7 +22,7 @@ id <- Sys.getenv('id') # POC in Wildlife Ecology (Responses)
 login <- Sys.getenv('login_sheet') # POC in Wildlife Ecology - Login
 schema <- Sys.getenv('schema') # POC in Wildlife Ecology - Schema
 
-# Connect Google Account
+# Set non-interactive authentication
 options(gargle_oauth_cache = '.secrets')
 googlesheets4::gs4_auth(cache = '.secrets', email = email)
 
