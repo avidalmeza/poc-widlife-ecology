@@ -22,7 +22,7 @@ sidebar <- shinydashboard::dashboardSidebar(
 # Define body
 body <- shinydashboard::dashboardBody(
   # Link stylesheet
-  includeCSS(here::here('database', 'www', 'styles.css')),
+  includeCSS(here::here('poc_wildlife_ecology', 'www', 'styles.css')),
   tabItems(
     tabItem(
       # About tabItem ----
@@ -35,13 +35,13 @@ body <- shinydashboard::dashboardBody(
         fluidRow(
           column(width = 8,
                  # Add about text
-                 box(width = NULL, includeMarkdown(here::here('database', 'text', 'about.md')))
+                 box(width = NULL, includeMarkdown(here::here('poc_wildlife_ecology', 'text', 'about.md')))
                  ),
           column(width = 4,
                  # Add join text
-                 box(width = NULL, includeMarkdown(here::here('database', 'text', 'join.md'))),
+                 box(width = NULL, includeMarkdown(here::here('poc_wildlife_ecology', 'text', 'join.md'))),
                  # Add edit text
-                 box(width = NULL, includeMarkdown(here::here('database', 'text', 'edit.md')))
+                 box(width = NULL, includeMarkdown(here::here('poc_wildlife_ecology', 'text', 'edit.md')))
                  )
           )
         )
