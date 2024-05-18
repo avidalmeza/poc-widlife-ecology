@@ -17,19 +17,19 @@ library(DTedit)
 email <- Sys.getenv('email')
 
 # Obtain Google Sheets IDs
-id <- Sys.getenv('id')
-login <- Sys.getenv('login_sheet')
-schema <- Sys.getenv('schema')
+id <- Sys.getenv('id') # POC in Wildlife Ecology (Responses) 
+login <- Sys.getenv('login_sheet') # POC in Wildlife Ecology - Login
+schema <- Sys.getenv('schema') # POC in Wildlife Ecology - Schema
 
 # Connect Google Account
 options(gargle_oauth_cache = '.secrets')
 googlesheets4::gs4_auth(cache = '.secrets', email = email)
 
 # Read Google Sheets
-sheet <- googlesheets4::read_sheet(id)
-login_sheet <- googlesheets4::read_sheet(login)
-input_types <- googlesheets4::read_sheet(schema, sheet = 1)
-schema <- googlesheets4::read_sheet(schema, sheet = 2)
+sheet <- googlesheets4::read_sheet(id) # POC in Wildlife Ecology (Responses)
+login_sheet <- googlesheets4::read_sheet(login) # POC in Wildlife Ecology - Login
+input_types <- googlesheets4::read_sheet(schema, sheet = 1) # POC in Wildlife Ecology - Schema
+schema <- googlesheets4::read_sheet(schema, sheet = 2) # POC in Wildlife Ecology - Schema
 
 # Define number of days for cookie expiration
 cookie_expiry <- 7
@@ -81,13 +81,15 @@ my_inputs <- input_types$`Input Type`
 names(my_inputs) <- names(my_users)[c(1:17)]
 
 # Define input choices
+# na.omit() - remove missing values in object
+# unlist() - flatten list to vector, satisfy data class for input type
 my_input_choices <- list(
-  `Country` = unlist(schema$Country),
-  `Current or intended career type` = unlist(schema$`Current or intended career type`),
-  `Current career stage` = unlist(schema$`Current career stage`),
-  `I identify as` = unlist(schema$`I identify as`),
-  `Pimary subfield` = unlist(schema$Subfield),
-  `Secondary subfield` = unlist(schema$Subfield)
+  `Country` = unlist(na.omit(schema$Country)),
+  `Current or intended career type` = unlist(na.omit(schema$`Current or intended career type`)),
+  `Current career stage` = unlist(na.omit(schema$`Current career stage`)),
+  `I identify as` = unlist(na.omit(schema$`I identify as`)),
+  `Pimary subfield` = unlist(na.omit(schema$Subfield)),
+  `Secondary subfield` = unlist(na.omit(schema$Subfield))
 )
 
 # Assign names to input type vector 
