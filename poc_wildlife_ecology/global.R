@@ -20,16 +20,16 @@ library(DTedit)
 email <- Sys.getenv('email')
 
 # Obtain Google Sheets IDs
-responses <- googledrive::as_id(Sys.getenv('responses')) # POC in Wildlife Ecology (Responses) 
-login <- googledrive::as_id(Sys.getenv('login')) # POC in Wildlife Ecology - Login
-schema <- googledrive::as_id(Sys.getenv('schema')) # POC in Wildlife Ecology - Schema
+responses_id <- googledrive::as_id(Sys.getenv('responses')) # POC in Wildlife Ecology (Responses) 
+login_id <- googledrive::as_id(Sys.getenv('login')) # POC in Wildlife Ecology - Login
+schema_id <- googledrive::as_id(Sys.getenv('schema')) # POC in Wildlife Ecology - Schema
 
 # Set web app flow  
 options(gargle_oauth_client_type = 'web')
 
 # Set non-interactive authentication
 options(gargle_oauth_cache = '.secrets')
-googlesheets4::gs4_auth(cache = '.secrets', email = TRUE, use_oob = TRUE)
+googlesheets4::gs4_auth(cache = '.secrets', email = TRUE)
 
 # Set non-interactive authentication with service account
 # path <- here::here('poc_wildlife_ecology', 'service_account.json')
@@ -38,10 +38,10 @@ googlesheets4::gs4_auth(cache = '.secrets', email = TRUE, use_oob = TRUE)
 # googlesheets4::gs4_auth(token = token_obj)
 
 # Read Google Sheets
-responses <- googlesheets4::read_sheet(responses) # POC in Wildlife Ecology (Responses)
-login <- googlesheets4::read_sheet(login) # POC in Wildlife Ecology - Login
-input_types <- googlesheets4::read_sheet(schema, sheet = 1) # POC in Wildlife Ecology - Schema
-schema <- googlesheets4::read_sheet(schema, sheet = 2) # POC in Wildlife Ecology - Schema
+responses <- googlesheets4::read_sheet(responses_id) # POC in Wildlife Ecology (Responses)
+login <- googlesheets4::read_sheet(login_id) # POC in Wildlife Ecology - Login
+input_types <- googlesheets4::read_sheet(schema_id, sheet = 1) # POC in Wildlife Ecology - Schema
+schema <- googlesheets4::read_sheet(schema_id, sheet = 2) # POC in Wildlife Ecology - Schema
 
 # Define number of days for cookie expiration
 cookie_expiry <- 7

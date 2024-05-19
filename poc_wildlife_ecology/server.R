@@ -44,7 +44,7 @@ server <- function(input, output){
     my_users <- rbind(data, row)
     
     # Overwrite data frame to sheet
-    googlesheets4::write_sheet(my_users, ss = id, sheet = 'Sheet1')
+    googlesheets4::write_sheet(data = my_users, ss = responses, sheet = 'Sheet1')
     
     # View data frame
     return(my_users)
@@ -56,7 +56,7 @@ server <- function(input, output){
     my_users[row,] <- data[row,]
     
     # Overwrite data frame to sheet
-    googlesheets4::write_sheet(my_users, ss = id, sheet = 'Sheet1')
+    googlesheets4::sheet_write(data = my_users, ss = responses, sheet = 'Sheet1')
     
     # View data frame
     return(my_users)
@@ -68,7 +68,7 @@ server <- function(input, output){
     my_users[row,] <- my_users[-row,]
     
     # Overwrite data frame to sheet
-    googlesheets4::write_sheet(my_users, ss = id, sheet = 'Sheet1')
+    googlesheets4::sheet_write(data = my_users, ss = responses, sheet = 'Sheet1')
     
     # View data frame
     return(my_users)
@@ -98,7 +98,7 @@ server <- function(input, output){
       fluidRow(
         column(width = 12,
                # Add instructions text
-               box(width = NULL, includeMarkdown(here::here('database', 'text', 'instructions.md'))))),
+               box(width = NULL, includeMarkdown('text/instructions.md')))),
       # Define fluidRow
       fluidRow(
         column(width = 12,
