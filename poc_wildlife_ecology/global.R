@@ -15,24 +15,26 @@ library(DBI)
 library(DT)
 library(DTedit)
 
-# Set non-interactive authentication
-# path <- here::here('poc_wildlife_ecology', 'service_account.json')
-# scope <- c('https://www.googleapis.com/auth/spreadsheets')
-# token_obj <- gargle::credentials_service_account(path = path, scopes = scope)
-# googlesheets4::gs4_auth(token = token_obj$private_key)
-
-# googlesheets4::gs4_auth(path = '.secrets/service_account.json')
-
 # Obtain Google Accounts email
 email <- Sys.getenv('email')
-
-# options(gargle_oauth_cache = '.secrets')
-googlesheets4::gs4_auth(cache = '.secrets', email = email)
 
 # Obtain Google Sheets IDs
 id <- Sys.getenv('id') # POC in Wildlife Ecology (Responses) 
 login <- Sys.getenv('login_sheet') # POC in Wildlife Ecology - Login
 schema <- Sys.getenv('schema') # POC in Wildlife Ecology - Schema
+
+# Set web app flow  
+options(gargle_oauth_client_type = 'web')
+
+# Set non-interactive authentication
+options(gargle_oauth_cache = '.secrets')
+googlesheets4::gs4_auth(cache = '.secrets', email = TRUE, use_oob = TRUE)
+
+# Set non-interactive authentication with service account
+# path <- here::here('poc_wildlife_ecology', 'service_account.json')
+# scope <- c('https://www.googleapis.com/auth/spreadsheets')
+# token_obj <- gargle::credentials_service_account(path = path, scopes = scope)
+# googlesheets4::gs4_auth(token = token_obj)
 
 # Read Google Sheets
 sheet <- googlesheets4::read_sheet(id) # POC in Wildlife Ecology (Responses)
