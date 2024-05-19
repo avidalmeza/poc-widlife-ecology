@@ -44,7 +44,7 @@ server <- function(input, output){
     my_users <- rbind(data, row)
     
     # Overwrite data frame to sheet
-    googlesheets4::write_sheet(data = my_users, ss = responses, sheet = 'Sheet1')
+    googlesheets4::sheet_write(data = my_users, ss = responses_id, sheet = 'Sheet1')
     
     # View data frame
     return(my_users)
@@ -56,7 +56,7 @@ server <- function(input, output){
     my_users[row,] <- data[row,]
     
     # Overwrite data frame to sheet
-    googlesheets4::sheet_write(data = my_users, ss = responses, sheet = 'Sheet1')
+    googlesheets4::sheet_write(data = my_users, ss = responses_id, sheet = 'Sheet1')
     
     # View data frame
     return(my_users)
@@ -68,7 +68,7 @@ server <- function(input, output){
     my_users[row,] <- my_users[-row,]
     
     # Overwrite data frame to sheet
-    googlesheets4::sheet_write(data = my_users, ss = responses, sheet = 'Sheet1')
+    googlesheets4::sheet_write(data = my_users, ss = responses_id, sheet = 'Sheet1')
     
     # View data frame
     return(my_users)
