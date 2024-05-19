@@ -3,6 +3,7 @@ library(shinydashboard)
 library(shinyWidgets)
 library(shinyauthr)
 library(shinyalert)
+library(jsonlite)
 library(here)
 library(tidyverse)
 library(lubridate)
@@ -14,17 +15,24 @@ library(DBI)
 library(DT)
 library(DTedit)
 
+# Set non-interactive authentication
+# path <- here::here('poc_wildlife_ecology', 'service_account.json')
+# scope <- c('https://www.googleapis.com/auth/spreadsheets')
+# token_obj <- gargle::credentials_service_account(path = path, scopes = scope)
+# googlesheets4::gs4_auth(token = token_obj$private_key)
+
+# googlesheets4::gs4_auth(path = '.secrets/service_account.json')
+
 # Obtain Google Accounts email
 email <- Sys.getenv('email')
+
+# options(gargle_oauth_cache = '.secrets')
+googlesheets4::gs4_auth(cache = '.secrets', email = email)
 
 # Obtain Google Sheets IDs
 id <- Sys.getenv('id') # POC in Wildlife Ecology (Responses) 
 login <- Sys.getenv('login_sheet') # POC in Wildlife Ecology - Login
 schema <- Sys.getenv('schema') # POC in Wildlife Ecology - Schema
-
-# Set non-interactive authentication
-options(gargle_oauth_cache = '.secrets')
-googlesheets4::gs4_auth(cache = '.secrets', email = email)
 
 # Read Google Sheets
 sheet <- googlesheets4::read_sheet(id) # POC in Wildlife Ecology (Responses)
@@ -36,7 +44,7 @@ schema <- googlesheets4::read_sheet(schema, sheet = 2) # POC in Wildlife Ecology
 cookie_expiry <- 7
 
 # Define function to retrieve sessions from database
-get_sessions_from_db <- function(conn = db, expiry = cookie_expiry) {
+get_sessions_from_db <- function(conn = db, expiry = cookie_expiry){
   # Return data frame
   DBI::dbReadTable(conn, 'sessions') %>%
     mutate(login_time = lubridate::ymd_hms(login_time)) %>%
@@ -45,7 +53,7 @@ get_sessions_from_db <- function(conn = db, expiry = cookie_expiry) {
 }
 
 # Define function to add a session to database
-add_session_to_db <- function(user, sessionid, conn = db) {
+add_session_to_db <- function(user, sessionid, conn = db){
   tibble(
     user = user, 
     sessionid = sessionid, 
