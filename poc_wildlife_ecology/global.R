@@ -4,7 +4,6 @@ library(shinyWidgets)
 library(shinyauthr)
 library(shinyalert)
 library(jsonlite)
-library(here)
 library(tidyverse)
 library(lubridate)
 library(gargle)
@@ -32,13 +31,14 @@ options(gargle_oauth_cache = '.secrets')
 googlesheets4::gs4_auth(cache = '.secrets', email = TRUE)
 
 # Set non-interactive authentication with service account
-# path <- here::here('poc_wildlife_ecology', 'service_account.json')
+# path <- c('poc_wildlife_ecology/service_account.json')
 # scope <- c('https://www.googleapis.com/auth/spreadsheets')
 # token_obj <- gargle::credentials_service_account(path = path, scopes = scope)
 # googlesheets4::gs4_auth(token = token_obj)
 
 # Read Google Sheets
 responses <- googlesheets4::read_sheet(responses_id) # POC in Wildlife Ecology (Responses)
+new_responses <- googlesheets4::read_sheet(responses_id, sheet = 'Copy') # POC in Wildlife Ecology (Responses)
 login <- googlesheets4::read_sheet(login_id) # POC in Wildlife Ecology - Login
 input_types <- googlesheets4::read_sheet(schema_id, sheet = 1) # POC in Wildlife Ecology - Schema
 schema <- googlesheets4::read_sheet(schema_id, sheet = 2) # POC in Wildlife Ecology - Schema
@@ -85,6 +85,7 @@ users <- responses %>%
 
 # Convert to data frame
 my_users <- as.data.frame(users)
+my_returning_users <- as.data.frame(new_responses)
 
 # Define input type vector
 my_inputs <- input_types$`Input Type`
@@ -99,10 +100,10 @@ my_input_choices <- list(
   `Country` = unlist(na.omit(schema$Country)),
   `Current or intended career type` = unlist(na.omit(schema$`Current or intended career type`)),
   `Current career stage` = unlist(na.omit(schema$`Current career stage`)),
-  `I identify as` = unlist(na.omit(schema$`I identify as`)),
+  # `I identify as` = unlist(na.omit(schema$`I identify as`)),
   `Pimary subfield` = unlist(na.omit(schema$Subfield)),
   `Secondary subfield` = unlist(na.omit(schema$Subfield))
 )
 
 # Assign names to input type vector 
-names(my_input_choices) <- names(my_users)[c(8:13)]
+names(my_input_choices) <- names(my_users)[c(8:10, 12:13)]

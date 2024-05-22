@@ -18,7 +18,7 @@ server <- function(input, output){
     id = 'logout',
     active = shiny::reactive(credentials()$user_auth)
   )
-    
+  
   # Define reactive function
   filter_users <- shiny::reactive({
     users %>%
@@ -41,46 +41,46 @@ server <- function(input, output){
   # Define insert function
   my.insert.callback <- function(data, row){
     # Append row to data frame
-    my_users <- rbind(data, row)
+    my_returning_users <- rbind(data, row)
     
     # Overwrite data frame to sheet
-    googlesheets4::sheet_write(data = my_users, ss = responses_id, sheet = 'Sheet1')
+    googlesheets4::sheet_write(data = my_returning_users, ss = responses_id, sheet = 'Copy')
     
     # View data frame
-    return(my_users)
+    return(my_returning_users)
   }
   
   # Define update function
   my.update.callback <- function(data, olddata, row){
     # Update row in data frame
-    my_users[row,] <- data[row,]
+    my_returning_users[row,] <- data[row,]
     
     # Overwrite data frame to sheet
-    googlesheets4::sheet_write(data = my_users, ss = responses_id, sheet = 'Sheet1')
+    googlesheets4::sheet_write(data = my_returning_users, ss = responses_id, sheet = 'Copy')
     
     # View data frame
-    return(my_users)
+    return(my_returning_users)
   }
   
   # Define delete function
   my.delete.callback <- function(data, row){
     # Delete row in data frame
-    my_users[row,] <- my_users[-row,]
+    my_returning_users[row,] <- my_returning_users[-row,]
     
     # Overwrite data frame to sheet
-    googlesheets4::sheet_write(data = my_users, ss = responses_id, sheet = 'Sheet1')
+    googlesheets4::sheet_write(data = my_returning_users, ss = responses_id, sheet = 'Copy')
     
     # View data frame
-    return(my_users)
+    return(my_returning_users)
   }
   
   # Create DTedit object
   DTedit::dtedit_server(
     id = 'editusers',
-    thedata = my_users,
-    view.cols = names(my_users)[c(1:3)],
-    edit.cols = names(my_users)[c(1:17)],
-    edit.label.cols = names(my_users)[c(1:17)],
+    thedata = my_returning_users, # my_users,
+    view.cols = names(my_returning_users)[c(1:3)], # names(my_users)[c(1:3)],
+    edit.cols = names(my_returning_users), # names(my_users)[c(1:17)],
+    edit.label.cols = names(my_returning_users), # names(my_users)[c(1:17)],
     input.types = my_inputs,
     input.choices = my_input_choices,
     callback.update = my.update.callback,

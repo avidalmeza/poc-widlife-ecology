@@ -5,6 +5,6 @@ account: avidalmeza
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 12028569
-bundleId: 8634978
+bundleId: 8644813
 url: https://avidalmeza.shinyapps.io/poc_wildlife_ecology/
 version: 1
